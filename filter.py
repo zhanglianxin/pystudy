@@ -17,11 +17,12 @@ print filter(not_empty, ['A', '', 'B', None, 'C', '  '])
 # 可见用 filter() 这个高阶函数，关键在于正确实现一个“筛选”函数。
 
 # 尝试用 filter() 删除 1 -- 100 的素数
+import math
 def not_sushu(n):
     flag = False
-    if n <= 2:
+    if n <= 3:
         return n
-    for x in xrange(2, n / 2):
+    for x in xrange(3, math.trunc(math.sqrt(n))):
         if n % x == 0:
             flag = True
             continue
