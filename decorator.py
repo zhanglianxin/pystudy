@@ -52,4 +52,44 @@ now()
 # 首先执行 log('execute') ，返回的是 decorator() 函数，再调用
 #  返回的函数，参数是 now() 函数，返回值最终是 wrapper() 函数。
 
-# TODO uncompleted
+# 以上两种装饰器的定义都没有问题，但还差最后一步。
+# 经过装饰器装饰之后的函数， __name__ 已经从原来的 'now' 变成了 'wrapper' ：
+print now.__name__
+# 因为返回的那个 wrapper() 函数名字就是 'wrapper' ，所以，需要把原始函数的
+#  __name__ 等属性复制到 wrapper() 函数中，否则，有些依赖函数签名的代码执行就会出错。
+
+import functools
+def log(func):
+    @functools.wrap(func)
+    def wrapper(*args, **kw):
+        print 'call %s():' % func.__name__
+        return func(*args, **kw)
+    return wrapper
+# 带参数的装饰器
+def log(text):
+    def decorator(func):
+        @functools.wrap(func)
+        def wrapper(*args, **kw):
+            print 'call %s():' % func.__name__
+            return func(*args, **kw)
+        return wrapper
+    return decorator
+
+# 在面向对象的设计模式中，装饰器被称为装饰模式。
+#  OOP 的装饰模式需要通过继承和组合来实现，
+#  而 Python 除了能支持 OOP 的装饰器外，
+#  直接从语法层次支持装饰器。Python 的装饰器
+#  可以用函数实现，也可以用类实现。
+# 装饰器可以增强函数的功能，定义起来虽然有点复杂，
+#  但使用起来非常灵活和方便。
+
+# 编写一个装饰器，能在函数调用的前后打印出 'begin call' 和 'end call' 的日志。
+
+# 再思考能否写出一个 @log 的装饰器，使它既支持：
+# @log
+# def f():
+#     pass
+# 又支持：
+# @log('execute')
+# def f():
+#     pass
