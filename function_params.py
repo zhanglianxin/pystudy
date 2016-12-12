@@ -63,7 +63,7 @@ print '---'
 #  这些关键字参数在函数内部自动组装为一个 dict 。
 
 def person(name, age, **kw):
-    print 'name:', name, 'age:', 'other:', kw
+    print 'name:', name, 'age:', age, 'other:', kw
 # 除了必须参数外，还接受关键字参数。
 # 在调用该参数时，可以只传入必选参数。
 person('Michael', 30)

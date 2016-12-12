@@ -10,6 +10,8 @@ def now():
     print '2016-12-08'
 f = now
 f()
+print now.__name__
+print f.__name__
 
 # 在代码运行期间动态增加功能的方式，称之为“装饰器”。
 def log(func):
