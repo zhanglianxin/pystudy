@@ -58,3 +58,29 @@ main()
 print 'END'
 # 同样是出错，但程序打印完错误后会继续执行，并正常退出。
 # 通过配置， logging 还可以把错误记录到日志文件里，方便事后排查。
+
+# 抛出错误
+class FooError(StandardError):
+    pass
+def foo(s):
+    n = int(s)
+    if n == 0:
+        raise FooError('invalid value: %s' % s)
+    return 10 / n
+def main():
+    bar('0')
+# main()
+
+def foo(s):
+    n = int(s)
+    return 10 / n
+def bar(s):
+    try:
+        return foo(s) * 2
+    except StandardError, e:
+        print 'Error!'
+        raise # 不带参数，把当前错误原样抛出。
+        raise ValueError('input error!') # 把一种类型的错误转换成另一种类型
+def main():
+    bar('0')
+main()
